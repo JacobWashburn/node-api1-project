@@ -1,10 +1,12 @@
 const express = require('express');
 const db = require('./data/db.js');
+const cors = require('cors');
 
 const port = 5000;
 
 const server = express();
 server.use(express.json());
+server.use(cors());
 
 server.get('/', (req, res) => {
     res.send({api: 'If this prints out, API is running.'});
@@ -55,8 +57,8 @@ server.delete('/api/users/:id', (req, res) => {
     let userToDelete = {};
     db.findById(userId)
         .then(returnedUser => {
-            userToDelete = returnedUser
-        })
+            userToDelete = returnedUser;
+        });
     console.log(userToDelete);
     db.remove(userId)
         .then(id => {
